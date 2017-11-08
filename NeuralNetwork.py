@@ -40,7 +40,7 @@ class NeuralNetwork(object):
 		layer0 = X
 		layer1 = self.sigmoid(np.dot(layer0, weights1))
 		layer2 = self.sigmoid(np.dot(layer1, weights2))
-		return layer2
+		print("Result: \n ==========\n", layer2, end="")
 	
 	#non-linear function (sigmoid)
 	def sigmoid(self, z):
@@ -70,10 +70,10 @@ def main():
 	nn.train(X, y)
 
 	print("\n===========\n")
-	print(nn.getResult(np.array([[0, 0],
-				 [0, 1],
-				 [1, 1],
-				 [1, 0]])))
+	nn.getResult(np.array([[0, 0],
+				[0, 1],
+				[1, 1],
+				[1, 0]]))
 
 if  __name__=="__main__":
 	main()

@@ -13,8 +13,8 @@ class NeuralNetwork(object):
 
 	def train(self, X, y):
 
-		#train for 60000 epochs
-		for j in range(60000):
+		#train for 500,000 epochs
+		for j in range(500000):
 			layer0 = X
 			layer1 = self.sigmoid(np.dot(layer0, self.W1))
 			layer2 = self.sigmoid(np.dot(layer1, self.W2))

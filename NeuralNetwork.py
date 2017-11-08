@@ -21,7 +21,6 @@ class NeuralNetwork(object):
 			
 			#error
 			layer2_error = y - layer2
-			print(layer2_error)
 			if (j % 10000) == 0:
 				print("Error: " + str(np.mean(np.abs(layer2_error))))
 

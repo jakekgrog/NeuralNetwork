@@ -1,4 +1,5 @@
 import numpy as np
+from datetime import datetime
 
 class NeuralNetwork(object):
 
@@ -12,8 +13,8 @@ class NeuralNetwork(object):
 		self.W2 = 2*np.random.random((4, self.outputLayerSize)) - 1
 
 	def train(self, X, y):
-
-		#train for 500,000 epochs
+		before = datetime.now()
+		#train for 60000 epochs
 		for j in range(500000):
 			layer0 = X
 			layer1 = self.sigmoid(np.dot(layer0, self.W1))
@@ -22,6 +23,7 @@ class NeuralNetwork(object):
 			#error
 			layer2_error = y - layer2
 			if (j % 10000) == 0:
+				print("Epoch: " + str(j))
 				print("Error: " + str(np.mean(np.abs(layer2_error))))
 
 			#backpropagate 
@@ -31,7 +33,7 @@ class NeuralNetwork(object):
 
 			self.W2 += layer1.T.dot(layer2_delta) * .1
 			self.W1 += layer0.T.dot(layer1_delta) * .1
-
+		print("\nTraining time: " + str(datetime.now()-before).split(":")[2][:5] + " seconds")
 	# test input X
 	def getResult(self, X):
 		weights1 = self.W1
@@ -40,7 +42,7 @@ class NeuralNetwork(object):
 		layer0 = X
 		layer1 = self.sigmoid(np.dot(layer0, weights1))
 		layer2 = self.sigmoid(np.dot(layer1, weights2))
-		print("Result: \n ==========\n", layer2, end="")
+		print("Result: \n===========\n", layer2, end="")
 	
 	#non-linear function (sigmoid)
 	def sigmoid(self, z):
@@ -67,13 +69,15 @@ def main():
 	nn = NeuralNetwork()
 
 	print("\n===========\n")
+
 	nn.train(X, y)
 
 	print("\n===========\n")
+
 	nn.getResult(np.array([[0, 0],
-				[0, 1],
-				[1, 1],
-				[1, 0]]))
+				 [0, 1],
+				 [1, 1],
+				 [1, 0]]))
 
 if  __name__=="__main__":
 	main()

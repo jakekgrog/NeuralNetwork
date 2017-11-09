@@ -21,13 +21,13 @@ class NeuralNetwork(object):
 			layer2 = self.sigmoid(np.dot(layer1, self.W2))
 			
 			#error
-			layer2_error = y - layer2
+			self.layer2_error = y - layer2
 			if (j % 10000) == 0:
 				print("Epoch: " + str(j))
-				print("Error: " + str(np.mean(np.abs(layer2_error))))
+				print("Error: " + str(np.mean(np.abs(self.layer2_error))))
 
 			#backpropagate 
-			layer2_delta = layer2_error*self.sigmoid_prime(layer2)
+			layer2_delta = self.layer2_error*self.sigmoid_prime(layer2)
 			layer1_error = layer2_delta.dot(self.W2.T)
 			layer1_delta = layer1_error * self.sigmoid_prime(layer1)
 
@@ -42,7 +42,8 @@ class NeuralNetwork(object):
 		layer0 = X
 		layer1 = self.sigmoid(np.dot(layer0, weights1))
 		layer2 = self.sigmoid(np.dot(layer1, weights2))
-		print("Result: \n===========\n", layer2, end="")
+		print("Result: \n===========\n\n", layer2, end="")
+		print("\n\nAccuracy: ~", 100 - np.mean(np.abs(self.layer2_error)))
 	
 	#non-linear function (sigmoid)
 	def sigmoid(self, z):
@@ -64,7 +65,7 @@ def main():
 				[1], 
 				[0]])
 
-	print(X, "\n ==============\n", y)
+	print("Training inputs: \n\n", X, "\n ==============\n", "Training ouputs: \n\n", y)
 
 	nn = NeuralNetwork()
 
